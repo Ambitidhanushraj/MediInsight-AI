@@ -1,0 +1,42 @@
+# Environment variables — NEVER commit secrets
+.env
+
+# Uploaded medical files — patient data, must not be committed
+uploads/
+
+# Vector DB — large binary, rebuild with build_rag.py
+vectorstore/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Build / dist
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+frontend/dist/
