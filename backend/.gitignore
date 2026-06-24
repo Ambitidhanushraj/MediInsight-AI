@@ -7,6 +7,9 @@ uploads/
 # Vector DB — large binary, rebuild with build_rag.py
 vectorstore/
 
+# Local runtime database
+mediinsight.db
+
 # Python
 __pycache__/
 *.py[cod]
