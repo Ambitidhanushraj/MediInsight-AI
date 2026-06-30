@@ -13,6 +13,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+
 function App() {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
@@ -149,8 +151,8 @@ function App() {
   const loadHistory = async (currentReportId = "") => {
     try {
       const url = currentReportId
-        ? `http://127.0.0.1:8000/chat-history?report_id=${encodeURIComponent(currentReportId)}&limit=20`
-        : "http://127.0.0.1:8000/chat-history?limit=20";
+        ? `${API_BASE_URL}/chat-history?report_id=${encodeURIComponent(currentReportId)}&limit=20`
+        : `${API_BASE_URL}/chat-history?limit=20`;
       const response = await axios.get(url);
       setHistoryItems(response.data.items || []);
     } catch (error) {
@@ -161,8 +163,8 @@ function App() {
   const clearHistory = async (currentReportId = "") => {
     try {
       const url = currentReportId
-        ? `http://127.0.0.1:8000/chat-history?report_id=${encodeURIComponent(currentReportId)}`
-        : "http://127.0.0.1:8000/chat-history";
+        ? `${API_BASE_URL}/chat-history?report_id=${encodeURIComponent(currentReportId)}`
+        : `${API_BASE_URL}/chat-history`;
       await axios.delete(url);
       await loadHistory(currentReportId);
       showToast("Chat history cleared", "success");
@@ -187,7 +189,7 @@ function App() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/upload-report",
+        `${API_BASE_URL}/upload-report`,
         formData
       );
 
@@ -214,7 +216,7 @@ function App() {
     try {
       setLoadingMedicalAnswer(true);
       const response = await axios.post(
-        "http://127.0.0.1:8000/ask-medical",
+        `${API_BASE_URL}/ask-medical`,
         {
           question: question,
           doctor_mode: doctorMode,
@@ -246,7 +248,7 @@ function App() {
     try {
       setLoadingReportAnswer(true);
       const response = await axios.post(
-        "http://127.0.0.1:8000/ask-report",
+        `${API_BASE_URL}/ask-report`,
         {
           question: question,
           report_text: result.text_preview,
@@ -284,7 +286,7 @@ function App() {
 
   const loadReportList = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/reports?limit=20");
+      const response = await axios.get(`${API_BASE_URL}/reports?limit=20`);
       setReportList(response.data.reports || []);
     } catch (error) {
       console.error(error);
@@ -294,7 +296,7 @@ function App() {
   const loadComparison = async () => {
     if (!compareReportId) return;
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/reports/${compareReportId}/analysis`);
+      const response = await axios.get(`${API_BASE_URL}/reports/${compareReportId}/analysis`);
       setCompareData(response.data);
       showToast("Comparison report loaded", "success");
     } catch (error) {
