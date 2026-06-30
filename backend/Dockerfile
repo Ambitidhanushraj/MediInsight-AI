@@ -20,9 +20,9 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Health check
+# Health check (uses Python since curl is not in the slim image)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+    CMD python -c "import urllib.request,os,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:' + os.getenv('PORT','8000') + '/health').status == 200 else sys.exit(1)" || exit 1
 
-# Run application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run application (bind to Render's $PORT, fallback to 8000 locally)
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
