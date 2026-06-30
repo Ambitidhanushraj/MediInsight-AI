@@ -31,7 +31,11 @@ CORS_ORIGINS: list[str] = [
         "CORS_ORIGINS",
         "http://localhost:3000,http://localhost:5173,http://localhost:5174,http://localhost:5175",
     ).split(",")
+    if o.strip()
 ]
+
+# Allows Vercel preview/prod URLs (can be overridden in environment)
+CORS_ORIGIN_REGEX: str = os.getenv("CORS_ORIGIN_REGEX", r"^https://.*\.vercel\.app$")
 
 # Vector DB
 VECTOR_DB: str = os.getenv("VECTOR_DB", "vectorstore")

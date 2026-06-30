@@ -9,7 +9,7 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 from app.api.report import router as report_router
 from app.api.rag import router as rag_router
 from app.api.report_chat import router as report_chat_router
-from app.config.config import CORS_ORIGINS
+from app.config.config import CORS_ORIGINS, CORS_ORIGIN_REGEX
 from app.services.history_service import init_history_db
 
 logging.basicConfig(
@@ -28,6 +28,7 @@ init_history_db()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
+    allow_origin_regex=CORS_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
