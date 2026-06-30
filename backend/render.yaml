@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: mediinsight-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: GEMINI_API_KEY
+        scope: run
+      - key: OPENROUTER_API_KEY
+        scope: run
+      - key: CORS_ORIGINS
+        value: https://mediinsight.vercel.app
+      - key: UPLOAD_DIR
+        value: /tmp/uploads

@@ -43,3 +43,11 @@ def root():
     return {
         "message": "MediInsight AI Backend Running"
     }
+
+@app.get("/health")
+def health():
+    """Health check endpoint for deployment monitoring"""
+    return {
+        "status": "healthy",
+        "service": "MediInsight AI Backend"
+    }
